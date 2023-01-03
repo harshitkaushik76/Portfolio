@@ -1,32 +1,53 @@
-             // =============  Form button start     =================
-document.querySelector("#submit").addEventListener("click" , startclick)
-function startclick(){
+document.addEventListener('DOMContentLoaded', () => {
+    // =============  Form button start     =================
+document.querySelector("#submit").addEventListener("click", startclick)
+function startclick() {
     alert("Form has been submit")
 }
-            // =============  Form button End     ================
-const dynamicText = document.getElementById("dynamic-text")
-const textArray = ["Developer"]
-const text = textArray[0]
-let content = " "
-let index = 0
-function handlePrint(c,text){
-    if(index == text.length){
-        handleDelete(c,text)
-        return 
-    }
-    c += text[index]
-    dynamicText.textContent = c
-    index++
-    setTimeout(handlePrint,200,c,text)
-}
-handlePrint(content,text)
+// =============  Form button End     ================
 
-function handleDelete(c,text){
-    if(index == -1){
+// =============  Text effect start   ================
+function handleDelete(){
+    if(index == -1){   
+        index = 0
+        arrayIdx++;
+        iterateOverArray()
+        console.log("Inside if")
         return
     }
     index--;
-    c = c.substring(0,index -1)
-    dynamicspan.textContent = c
-    setTimeout(handleDelete,500,c,text)
+    content = content.substring(0,index -1)
+    dynamicspan.textContent = content
+    setTimeout(handleDelete,200)
 }
+
+function handlePrint(text){
+    if(index == text.length){
+        handleDelete(text)
+        return
+    }
+    content += text[index]
+    dynamicspan.textContent = content
+    index++
+    setTimeout(handlePrint,200,text)
+}
+
+function iterateOverArray(){
+    if(arrayIdx == phrases.length){
+        arrayIdx = 0
+    }
+    let text = phrases[arrayIdx]
+    handlePrint(text)
+}
+
+const dynamicspan = document.querySelector("#dynamic-text")
+
+const phrases = ["I am a Web Developer...","I am pursuing B.Tech..."]
+let content = ""
+let index = 0
+let arrayIdx = 0
+
+iterateOverArray()
+
+// ============  Text effect end
+})
